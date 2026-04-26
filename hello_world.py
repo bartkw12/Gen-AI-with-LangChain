@@ -4,6 +4,7 @@ import os
 import sys
 
 from langchain_openai import AzureChatOpenAI
+from pydantic import SecretStr
 
 
 DEFAULT_PROMPT = "Tell me a joke about trains."
@@ -32,7 +33,7 @@ def create_llm() -> AzureChatOpenAI:
 
 	return AzureChatOpenAI(
 		azure_endpoint=get_required_env("AZURE_OPENAI_ENDPOINT"),
-		api_key=get_required_env("AZURE_OPENAI_API_KEY"),
+		api_key=SecretStr(get_required_env("AZURE_OPENAI_API_KEY")),
 		api_version=get_required_env("AZURE_OPENAI_API_VERSION"),
 		azure_deployment=get_required_env("AZURE_OPENAI_DEPLOYMENT"),
 	)
