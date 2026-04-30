@@ -1,0 +1,132 @@
+LCEL BASICS FOR BEGINNERS
+
+What LCEL is
+LCEL stands for LangChain Expression Language.
+It is LangChain's simple way to connect steps together into a workflow.
+
+The most basic LCEL idea looks like this:
+prompt | model | parser
+
+That means:
+- the prompt creates the instruction
+- the model reads the instruction and generates an answer
+- the parser converts the answer into the format you want to use
+
+Why LCEL exists
+LCEL makes AI workflows easier to read, build, and reuse.
+Instead of writing one large block of logic, you connect small steps together.
+
+This is useful because AI applications often need more than one step.
+For example:
+- build a prompt
+- send it to a model
+- clean the output
+- maybe pass that output into another step
+
+Why chaining AI workflows is important
+Real AI apps are usually not just one model call.
+They often need a sequence of actions.
+
+Examples:
+- question -> retrieve context -> prompt model -> return answer
+- user input -> classify request -> choose tool -> format result
+- raw text -> summarize -> extract action items -> save output
+
+Chaining matters because it helps you:
+- keep each step small and understandable
+- test each step more easily
+- swap one step without rewriting the whole workflow
+- build more advanced apps later, such as agents, RAG systems, or tool-using assistants
+
+How to think about LCEL
+Think of LCEL like a pipeline.
+Data goes in on the left, moves through each step, and comes out on the right.
+
+Example idea:
+input topic -> prompt template -> model -> string output
+
+How this repo's LCEL.py works
+Your file uses a very small demo chain:
+
+1. A prompt template creates a sentence like:
+   Explain LCEL in one short sentence.
+
+2. A fake model step receives that prompt.
+   In your file this is not a real AI model yet.
+   It is a mock step made with RunnableLambda so you can learn the LCEL shape first.
+
+3. StrOutputParser turns the model output into a plain Python string.
+
+This is good for learning because it shows the structure of LCEL without needing API keys.
+
+The important line in your file
+chain = prompt | model | parser
+
+That is the core LCEL pattern.
+
+How to run LCEL.py in this repo
+Open a terminal in this folder:
+C:\Users\gts\Desktop\Platforms Sandbox\Use Case No37\Use Case No37 Testing\test\Agent_Orchestration\Gen-AI-with-LangChain
+
+Option 1: run it with the virtual environment's Python directly
+".venv\Scripts\python.exe" LCEL.py
+
+Option 2: if the virtual environment is already activated
+python LCEL.py
+
+Run it with a custom topic:
+".venv\Scripts\python.exe" LCEL.py prompt templates
+
+What you should expect to see
+You should see output similar to this:
+
+Bare-bones LCEL:
+prompt | model | parser
+Mock response for: Explain LCEL in one short sentence.
+
+If you pass a different topic, the prompt text changes.
+
+How to use LCEL as you keep learning
+Start small.
+Learn these pieces first:
+- prompt templates
+- model calls
+- output parsers
+- RunnableLambda for simple custom steps
+
+After that, move into slightly more advanced patterns:
+- passing dictionaries into chains
+- branching and routing
+- retrieval chains
+- tool calling
+- agent workflows
+
+What a beginner should focus on first
+Do not try to learn all of LangChain at once.
+Start with these questions:
+- What data goes into the chain?
+- What does each step do?
+- What comes out of the chain?
+- Can I swap one step for another?
+
+If you understand those four questions, LCEL will start to feel simple.
+
+Common beginner mistake
+Many beginners jump straight into agents.
+That usually becomes confusing fast.
+
+It is better to first understand small chains such as:
+prompt -> model -> parser
+
+Agents make more sense after you understand simple chained workflows.
+
+Good next steps after this file
+1. Replace the fake model with a real AzureChatOpenAI model.
+2. Add one extra LCEL step that changes the text before it reaches the model.
+3. Build a chain that takes user input and returns both a short answer and a bullet summary.
+4. Learn how LCEL is used inside RAG and agent systems.
+
+Short summary
+LCEL is a clean way to connect AI workflow steps together.
+It is important because most useful AI systems are multi-step systems.
+Learning LCEL gives you the foundation for understanding larger LangChain applications.
