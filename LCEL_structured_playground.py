@@ -1,4 +1,6 @@
+import json
 import sys
+from typing import Any
 
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
@@ -23,6 +25,12 @@ def build_chain():
 	return prompt | structured_llm
 
 
+def format_result(result: BaseModel | dict[str, Any]) -> str:
+	if isinstance(result, BaseModel):
+		return result.model_dump_json(indent=2)
+	return json.dumps(result, indent=2)
+
+
 def main() -> None:
 	topic = " ".join(arg.strip() for arg in sys.argv[1:] if arg.strip()) or DEFAULT_TOPIC
 
@@ -36,7 +44,7 @@ def main() -> None:
 
 	print("LCEL structured playground:")
 	print("prompt | AzureChatOpenAI.with_structured_output(schema)")
-	print(result.model_dump_json(indent=2))
+	print(format_result(result))
 
 
 if __name__ == "__main__":
